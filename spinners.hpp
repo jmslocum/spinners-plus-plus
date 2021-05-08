@@ -35,11 +35,10 @@ namespace jmslocum {
       std::vector<std::string> frames;
   };
 
-  Animation dots = Animation(80, {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"});
-  Animation arrows = Animation(120, {"▹▹▹▹▹", "▸▹▹▹▹", "▹▸▹▹▹", "▹▹▸▹▹", "▹▹▹▸▹", "▹▹▹▹▸"});
-  Animation bounce = Animation(80, {"[    ]", "[=   ]", "[==  ]", "[=== ]", "[ ===]", "[  ==]", "[   =]", "[    ]", "[   =]", "[  ==]", "[ ===]", "[====]", "[=== ]", "[==  ]", "[=   ]"});
-  Animation classic = Animation(100, {"-", "\\", "|", "/"});
-
+  static Animation classic = Animation(100, {"-", "\\", "|", "/"});
+  static Animation dots = Animation(80, {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"});
+  static Animation arrows = Animation(120, {"▹▹▹▹▹", "▸▹▹▹▹", "▹▸▹▹▹", "▹▹▸▹▹", "▹▹▹▸▹", "▹▹▹▹▸"});
+  static Animation bounce = Animation(80, {"[    ]", "[=   ]", "[==  ]", "[=== ]", "[ ===]", "[  ==]", "[   =]", "[    ]", "[   =]", "[  ==]", "[ ===]", "[====]", "[=== ]", "[==  ]", "[=   ]"});
 
   class Spinner {
     public :
@@ -143,7 +142,8 @@ namespace jmslocum {
       const char* successSymbol = "✅";
       const char* failSymbol = "❌";
       const char* warnSymbol = "⚠";
-
+      
+      //Assumes ANSI terminal. 
       void clearLine() const {
         std::cout << "\33[2K";
       }

@@ -37,5 +37,14 @@ int main() {
   this_thread::sleep_for(3s);
   s.warning();
 
+  //Make my own animation
+  jmslocum::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};
+  s.setAnimation(a);
+  s.setText("A custom animation");
+  s.start();
+
+  this_thread::sleep_for(3s);
+  s.succeed("Custom animation complete");
+
   return 0;
 }
