@@ -8,7 +8,7 @@
 using namespace std;
 
 int main() {
-  jmslocum::Spinner s("Doing cool stuff", jmslocum::arrows);
+  jms::Spinner s("Doing cool stuff", jms::arrows);
 
   s.start();
   ostringstream oss; 
@@ -22,23 +22,23 @@ int main() {
 
   s.succeed("yay, it works!");
 
-  s = jmslocum::Spinner("Now Starting the next task", jmslocum::classic);
+  s = jms::Spinner("Now Starting the next task", jms::classic);
   s.start();
 
   this_thread::sleep_for(2s);
-  s.setAnimation(jmslocum::dots);
+  s.setAnimation(jms::dots);
   this_thread::sleep_for(2s);
 
   s.fail("Failed to finish that task");
 
-  s = jmslocum::Spinner("Trying one more...", jmslocum::bounce);
+  s = jms::Spinner("Trying one more...", jms::bounce);
   s.start();
 
   this_thread::sleep_for(3s);
   s.warning("This task ended with a warning");
 
   //Make my own animation
-  jmslocum::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};
+  jms::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};
   s.setAnimation(a);
   s.setText("A custom animation");
   s.start();

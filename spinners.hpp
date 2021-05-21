@@ -9,7 +9,7 @@
 #include <mutex>
 #include <chrono>
 
-namespace jmslocum {
+namespace jms {
   class Animation {
     public : 
       Animation() = delete;

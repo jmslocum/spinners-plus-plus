@@ -12,14 +12,14 @@ To this this just download and include the header in your project. This uses std
 #include "spinners.hpp"
 
 int main() {
-  jmslocum::Spinner s("Doing something cool", jmslocum::classic);
+  jms::Spinner s("Doing something cool", jms::classic);
   s.start();
 
   //Do work
   s.succeed("Complete!");
 
   //Make my own animation
-  jmslocum::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};
+  jms::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};
   s.setAnimation(a);
   s.setText("A custom animation");
   s.start();
