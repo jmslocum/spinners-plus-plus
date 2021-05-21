@@ -29,13 +29,13 @@ int main() {
   s.setAnimation(jmslocum::dots);
   this_thread::sleep_for(2s);
 
-  s.fail();
+  s.fail("Failed to finish that task");
 
   s = jmslocum::Spinner("Trying one more...", jmslocum::bounce);
   s.start();
 
   this_thread::sleep_for(3s);
-  s.warning();
+  s.warning("This task ended with a warning");
 
   //Make my own animation
   jmslocum::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};

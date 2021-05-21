@@ -1,5 +1,5 @@
 CXX = g++-10
-CXXFLAGS = --std=c++20 -Wall -Wextra
+CXXFLAGS = --std=c++20 -O3 -Wall -Wextra
 LDFLAGS = -lpthread
 EXE = spinner_test
 OBJS = spinner_test.o

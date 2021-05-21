@@ -10,8 +10,6 @@
 #include <chrono>
 
 namespace jmslocum {
-
-
   class Animation {
     public : 
       Animation() = delete;
@@ -35,10 +33,47 @@ namespace jmslocum {
       std::vector<std::string> frames;
   };
 
-  static Animation classic = Animation(100, {"-", "\\", "|", "/"});
-  static Animation dots = Animation(80, {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"});
-  static Animation arrows = Animation(120, {"▹▹▹▹▹", "▸▹▹▹▹", "▹▸▹▹▹", "▹▹▸▹▹", "▹▹▹▸▹", "▹▹▹▹▸"});
-  static Animation bounce = Animation(80, {"[    ]", "[=   ]", "[==  ]", "[=== ]", "[ ===]", "[  ==]", "[   =]", "[    ]", "[   =]", "[  ==]", "[ ===]", "[====]", "[=== ]", "[==  ]", "[=   ]"});
+  static Animation classic = Animation(100, 
+      {"-", 
+      "\\", 
+      "|", 
+      "/"});
+
+  static Animation dots = Animation(80, 
+      {"⠋", 
+      "⠙", 
+      "⠹", 
+      "⠸", 
+      "⠼", 
+      "⠴", 
+      "⠦", 
+      "⠧", 
+      "⠇", 
+      "⠏"});
+  static Animation arrows = Animation(120, 
+      {"▹▹▹▹▹", 
+      "▸▹▹▹▹", 
+      "▹▸▹▹▹", 
+      "▹▹▸▹▹", 
+      "▹▹▹▸▹", 
+      "▹▹▹▹▸"});
+
+  static Animation bounce = Animation(80, 
+      {"[    ]", 
+      "[=   ]", 
+      "[==  ]", 
+      "[=== ]", 
+      "[ ===]", 
+      "[  ==]", 
+      "[   =]", 
+      "[    ]", 
+      "[   =]", 
+      "[  ==]", 
+      "[ ===]",
+      "[====]", 
+      "[=== ]", 
+      "[==  ]", 
+      "[=   ]"});
 
   class Spinner {
     public :
@@ -85,7 +120,22 @@ namespace jmslocum {
         animationThread.join();
       }
 
+      void fail(const std::string& text) {
+        this->text = text;
+        success = false;
+        finished = true;
+        animationThread.join();
+      }
+
       void warning() {
+        partial = true;
+        success = false;
+        finished = true;
+        animationThread.join();
+      }
+
+      void warning(const std::string& text) {
+        this->text = text;
         partial = true;
         success = false;
         finished = true;
@@ -139,9 +189,9 @@ namespace jmslocum {
       bool success = false;
       bool partial = false;
 
-      const char* successSymbol = "✅";
-      const char* failSymbol = "❌";
-      const char* warnSymbol = "⚠";
+      const char* successSymbol = "\33[1;32m✓\33[0;0m";
+      const char* failSymbol = "\33[1;31m✕\33[0;0m";
+      const char* warnSymbol = "\33[1;33m⚠\33[0;0m";
       
       //Assumes ANSI terminal. 
       void clearLine() const {
