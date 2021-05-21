@@ -16,9 +16,9 @@ namespace jmslocum {
       Animation(const int interval, const std::vector<std::string>& frames) 
         : interval{interval}, frames{frames} {}
 
-      Animation& operator=(Animation& o) {
+      Animation& operator=(const Animation& o) {
         interval = o.interval;
-        frames.swap(o.frames);
+        frames = o.frames;
         return *this;
       }
 
