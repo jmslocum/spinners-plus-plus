@@ -1,5 +1,5 @@
-#ifndef __SPINNERS_HPP
-#define __SPINNERS_HPP
+#ifndef _SPINNERS_HPP
+#define _SPINNERS_HPP
 
 #include <iostream>
 #include <thread>
@@ -13,9 +13,8 @@ namespace jmslocum {
   class Animation {
     public : 
       Animation() = delete;
-      Animation(const int& interval, const std::vector<std::string>& frames) 
+      Animation(const int interval, const std::vector<std::string>& frames) 
         : interval{interval}, frames{frames} {}
-      ~Animation() = default;
 
       Animation& operator=(Animation& o) {
         interval = o.interval;
@@ -25,7 +24,6 @@ namespace jmslocum {
 
       int getInterval() const { return interval; } 
       const std::vector<std::string>& getFrames() const { return frames; }
-
 
 
     private : 
