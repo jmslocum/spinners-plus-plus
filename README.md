@@ -16,7 +16,7 @@ int main() {
   s.start();
 
   //Do work
-  s.succeed("Complete!");
+  s.finish(jms::FinishedState::SUCCESS, "Complete!");
 
   //Make my own animation
   jms::Animation a{80, {"[.....]","[O....]","[.O...]","[..O..]","[...O.]","[....O]"}};
@@ -25,7 +25,7 @@ int main() {
   s.start();
 
   this_thread::sleep_for(3s);
-  s.succeed("Custom animation complete");
+  s.finish(jms::FinishedState::SUCCESS, "Custom animation complete");
 
   return 0;
 }

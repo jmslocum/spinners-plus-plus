@@ -48,6 +48,7 @@ namespace jms {
       "⠧", 
       "⠇", 
       "⠏"});
+
   static Animation arrows = Animation(120, 
       {"▹▹▹▹▹", 
       "▸▹▹▹▹", 
@@ -55,6 +56,14 @@ namespace jms {
       "▹▹▸▹▹", 
       "▹▹▹▸▹", 
       "▹▹▹▹▸"});
+
+  static Animation arrows_reverse = Animation(120,
+      {"◃◃◃◃◃",
+      "◃◃◃◃◂",
+      "◃◃◃◂◃",
+      "◃◃◂◃◃",
+      "◃◂◃◃◃", 
+      "◂◃◃◃◃"});
 
   static Animation bounce = Animation(80, 
       {"[    ]", 
@@ -72,6 +81,27 @@ namespace jms {
       "[=== ]", 
       "[==  ]", 
       "[=   ]"});
+
+  static Animation toggle = Animation(250, 
+      {"⊶",
+			"⊷"});
+
+  static Animation progress = Animation(80, 
+      {"▰▱▱▱▱▱▱",
+			"▰▰▱▱▱▱▱",
+			"▰▰▰▱▱▱▱",
+			"▰▰▰▰▱▱▱",
+			"▰▰▰▰▰▱▱",
+			"▰▰▰▰▰▰▱",
+			"▰▰▰▰▰▰▰",
+			"▰▱▱▱▱▱▱"});
+
+
+  enum class FinishedState {
+    SUCCESS,
+    WARNING,
+    FAILURE
+  };
 
   class Spinner {
     public :
@@ -99,45 +129,21 @@ namespace jms {
         this->animationThread = std::thread(std::ref(*this));
       }
 
-      void succeed() {
-        success = true;
+      void finish(FinishedState state) {
         finished = true;
+        if (state == FinishedState::SUCCESS) {
+          success = true;
+        }
+        else if (state == FinishedState::WARNING) {
+          partial = true;
+        }
+
+        animationThread.join();
       }
 
-      void succeed(const std::string& text) {
+      void finish(FinishedState state, const std::string& text) {
         this->text = text;
-        success = true;
-        finished = true;
-        animationThread.join();
-      }
-
-
-      void fail() {
-        success = false;
-        finished = true;
-        animationThread.join();
-      }
-
-      void fail(const std::string& text) {
-        this->text = text;
-        success = false;
-        finished = true;
-        animationThread.join();
-      }
-
-      void warning() {
-        partial = true;
-        success = false;
-        finished = true;
-        animationThread.join();
-      }
-
-      void warning(const std::string& text) {
-        this->text = text;
-        partial = true;
-        success = false;
-        finished = true;
-        animationThread.join();
+        this->finish(state);
       }
 
       void operator()() const {
@@ -187,15 +193,16 @@ namespace jms {
       bool success = false;
       bool partial = false;
 
-      const char* successSymbol = "\33[1;32m✓\33[0;0m";
-      const char* failSymbol = "\33[1;31m✕\33[0;0m";
-      const char* warnSymbol = "\33[1;33m⚠\33[0;0m";
+      constexpr static const char* successSymbol = "\33[1;32m✓\33[0;0m";
+      constexpr static const char* failSymbol = "\33[1;31m✕\33[0;0m";
+      constexpr static const char* warnSymbol = "\33[1;33m⚠\33[0;0m";
       
       //Assumes ANSI terminal. 
       void clearLine() const {
         std::cout << "\33[2K";
       }
   };
+
 };
 
 #endif
